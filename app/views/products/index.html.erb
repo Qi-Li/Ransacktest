@@ -1,0 +1,54 @@
+<h1>Listing products</h1>
+
+<%= search_form_for @search do |f|%>
+<div class = "field">
+	<%= f.label :name_cont, "Name Contains"%>
+	<%= f.text_field :name_cont%>
+</div>
+
+<div class = "field">
+	<%= f.label :price_start, "Price Contains"%>
+	<%= f.text_field :price_start%>
+</div>
+
+<div class = "field">
+	<%= f.label :price_gteq, "Price Between"%>
+	<%= f.text_field :price_gteq%>
+	<%= f.label :price_lteq, "and"%>
+	<%= f.text_field :price_lteq%>
+</div>
+
+<div class = "actions">
+	<%= f.submit "Search"%>
+</div>
+<%end%>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Price</th>
+	
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.sort_by(&:created_at).reverse.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.date %></td>
+        <td><%= product.price %></td>
+	
+        <td><%= link_to 'Show', product %></td>
+        <td><%= link_to 'Edit', edit_product_path(product) %></td>
+        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Product', new_product_path %>
